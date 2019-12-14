@@ -10,6 +10,7 @@ message("CMAKE_CXX_FLAGS is ${CMAKE_CXX_FLAGS}")
 project(c++17)
 
 add_executable(nest-namespace src/c++17/nested-namespace.cpp)
+add_executable(init-list src/advanced/init-list.cpp)
 add_executable(hello-world src/hello-world.cpp)
 
 # for verbose option in make use make VERBOSE=1
