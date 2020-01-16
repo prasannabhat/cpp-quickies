@@ -1,2 +1,7 @@
+.idea
 build/
+
+# CMake
+cmake-build-*/
+
 *.out
