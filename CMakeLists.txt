@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(c++17)
 
 # set(CMAKE_CXX_COMPILER "g++")
-set(CMAKE_CXX_COMPILER "clang++")
+# set(CMAKE_CXX_COMPILER "clang++")
 
 set(CXX_WARNING_FLAGS "-Wall")
 
@@ -14,7 +14,7 @@ message("CXX compiler : ${CMAKE_CXX_COMPILER}")
 
 add_subdirectory(ext/googletest)
 
-add_subdirectory(src/gtest-example)
+# add_subdirectory(src/gtest-example)
 
 add_executable(nest-namespace src/c++17/nested-namespace.cpp)
 add_executable(init-list src/advanced/init-list.cpp)
