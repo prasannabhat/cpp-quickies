@@ -16,6 +16,7 @@ add_subdirectory(ext/googletest)
 
 add_subdirectory(src/gtest-example/gtest)
 add_subdirectory(src/gtest-example/gmock)
+add_subdirectory(src/threads)
 
 add_executable(nest-namespace src/c++17/nested-namespace.cpp)
 add_executable(init-list src/advanced/init-list.cpp)

@@ -1,0 +1,663 @@
+==56465== Helgrind, a thread error detector
+==56465== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==56465== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==56465== Command: ./a.out
+==56465== 
+DEPOSITOR : Account balance before the deposit is 5000
+==56465== ---Thread-Announcement------------------------------------------
+==56465== 
+==56465== Thread #1 is the program's root thread
+==56465== 
+==56465== ---Thread-Announcement------------------------------------------
+==56465== 
+==56465== Thread #2 was created
+==56465==    at 0x572387E: clone (clone.S:71)
+==56465==    by 0x4E49EC4: create_thread (createthread.c:100)
+==56465==    by 0x4E49EC4: pthread_create@@GLIBC_2.2.5 (pthread_create.c:797)
+==56465==    by 0x4C36A27: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x511E924: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x10A0A4: std::thread::thread<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (thread:126)
+==56465==    by 0x109B79: AccountUser::start() (account.cpp:88)
+==56465==    by 0x1093F5: main (account.cpp:99)
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 1 at 0x1FFEFFFBE8 by thread #1
+==56465== Locks held: none
+==56465==    at 0x10985F: Thread::start(std::thread*) (std-threads.hpp:40)
+==56465==    by 0x109B90: AccountUser::start() (account.cpp:89)
+==56465==    by 0x1093F5: main (account.cpp:99)
+==56465== 
+==56465== This conflicts with a previous read of size 1 by thread #2
+==56465== Locks held: none
+==56465==    at 0x109AB3: AccountUser::run() (account.cpp:78)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==  Address 0x1ffefffbe8 is on thread #1's stack
+==56465==  in frame #2, created by main (account.cpp:94)
+==56465== 
+==56465== ---Thread-Announcement------------------------------------------
+==56465== 
+==56465== Thread #3 was created
+==56465==    at 0x572387E: clone (clone.S:71)
+==56465==    by 0x4E49EC4: create_thread (createthread.c:100)
+==56465==    by 0x4E49EC4: pthread_create@@GLIBC_2.2.5 (pthread_create.c:797)
+==56465==    by 0x4C36A27: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x511E924: std::thread::_M_start_thread(std::unique_ptr<std::thread::_State, std::default_delete<std::thread::_State> >, void (*)()) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x10A0A4: std::thread::thread<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (thread:126)
+==56465==    by 0x109B79: AccountUser::start() (account.cpp:88)
+==56465==    by 0x109401: main (account.cpp:100)
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 8 at 0x30D038 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5174BBE: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099CD: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465== 
+==56465== This conflicts with a previous write of size 8 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109922: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x30d038 is 24 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 1 at 0x5DA2EC2 by thread #3
+==56465== Locks held: none
+==56465==    at 0x4C3C546: mempcpy (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x568D993: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1258)
+==56465==    by 0x5681976: fwrite (iofwrite.c:39)
+==56465==    by 0x5174CB3: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099CD: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==  Address 0x5da2ec2 is 50 bytes inside a block of size 4,096 alloc'd
+==56465==    at 0x4C30F2F: malloc (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x568018B: _IO_file_doallocate (filedoalloc.c:101)
+==56465==    by 0x5690378: _IO_doallocbuf (genops.c:365)
+==56465==    by 0x568F497: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:759)
+==56465==    by 0x568D9EC: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1266)
+==56465==    by 0x5681976: fwrite (iofwrite.c:39)
+==56465==    by 0x5174CB3: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109922: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==  Block was alloc'd by thread #2
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 8 at 0x30D038 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099CD: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465== 
+==56465== This conflicts with a previous write of size 8 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109922: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x30d038 is 24 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 1 at 0x30D109 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5175B56: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099E8: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465==    by 0x572388E: clone (clone.S:95)
+==56465== 
+==56465== This conflicts with a previous write of size 1 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5175BFC: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x10993D: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==  Address 0x30d109 is 233 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 1 at 0x30D108 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5175B5F: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099E8: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465==    by 0x572388E: clone (clone.S:95)
+==56465== 
+==56465== This conflicts with a previous write of size 1 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5175BF3: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x10993D: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==  Address 0x30d108 is 232 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 1 at 0x53E80F8 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5163109: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5169A18: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175B8B: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099E8: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465== 
+==56465== This conflicts with a previous write of size 1 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5119EE8: std::ctype<char>::_M_widen_init() const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175C17: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x10993D: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x53e80f8 is in the BSS segment of /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 1 at 0x5DA2EC3 by thread #3
+==56465== Locks held: none
+==56465==    at 0x4C3C56C: mempcpy (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x568D993: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1258)
+==56465==    by 0x5681976: fwrite (iofwrite.c:39)
+==56465==    by 0x5169AA8: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175B8B: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099E8: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==  Address 0x5da2ec3 is 51 bytes inside a block of size 4,096 alloc'd
+==56465==    at 0x4C30F2F: malloc (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x568018B: _IO_file_doallocate (filedoalloc.c:101)
+==56465==    by 0x5690378: _IO_doallocbuf (genops.c:365)
+==56465==    by 0x568F497: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:759)
+==56465==    by 0x568D9EC: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1266)
+==56465==    by 0x5681976: fwrite (iofwrite.c:39)
+==56465==    by 0x5174CB3: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109922: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==  Block was alloc'd by thread #2
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 1 at 0x53E8103 by thread #3
+==56465== Locks held: none
+==56465==    at 0x51749B3: std::basic_ostream<char, std::char_traits<char> >& std::endl<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099FD: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465==    by 0x572388E: clone (clone.S:95)
+==56465== 
+==56465== This conflicts with a previous write of size 2 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5119E33: std::ctype<char>::_M_widen_init() const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175C17: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x10993D: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x53e8103 is in the BSS segment of /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+==56465== 
+WITHDRAWER : Account balance before withdrawing is 5000
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 1 at 0x1FFEFFFC08 by thread #1
+==56465== Locks held: none
+==56465==    at 0x10985F: Thread::start(std::thread*) (std-threads.hpp:40)
+==56465==    by 0x109B90: AccountUser::start() (account.cpp:89)
+==56465==    by 0x109401: main (account.cpp:100)
+==56465== 
+==56465== This conflicts with a previous read of size 1 by thread #3
+==56465== Locks held: none
+==56465==    at 0x109AB3: AccountUser::run() (account.cpp:78)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==  Address 0x1ffefffc08 is on thread #1's stack
+==56465==  in frame #2, created by main (account.cpp:94)
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465==  Lock at 0x1FFEFFFC28 was first observed
+==56465==    at 0x4C3403C: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x1091A9: __gthread_mutex_lock(pthread_mutex_t*) (gthr-default.h:748)
+==56465==    by 0x109615: std::mutex::lock() (std_mutex.h:103)
+==56465==    by 0x109325: Account::deposit(double) (account.cpp:35)
+==56465==    by 0x109972: AccountUser::operateAccount() (account.cpp:55)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==  Address 0x1ffefffc28 is on thread #1's stack
+==56465==  in frame #2, created by main (account.cpp:94)
+==56465== 
+==56465== Possible data race during write of size 8 at 0x1FFEFFFC20 by thread #2
+==56465== Locks held: 1, at address 0x1FFEFFFC28
+==56465==    at 0x10934C: Account::deposit(double) (account.cpp:37)
+==56465==    by 0x109972: AccountUser::operateAccount() (account.cpp:55)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465==    by 0x572388E: clone (clone.S:95)
+==56465== 
+==56465== This conflicts with a previous read of size 8 by thread #3
+==56465== Locks held: none
+==56465==    at 0x109220: Account::getBalance() (account.cpp:14)
+==56465==    by 0x1099E0: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==  Address 0x1ffefffc20 is on thread #1's stack
+==56465==  in frame #2, created by main (account.cpp:94)
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 8 at 0x30D038 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5174BBE: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109985: AccountUser::operateAccount() (account.cpp:56)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465== 
+==56465== This conflicts with a previous write of size 8 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099CD: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x30d038 is 24 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 8 at 0x30D038 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109985: AccountUser::operateAccount() (account.cpp:56)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465== 
+==56465== This conflicts with a previous write of size 8 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099CD: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x30d038 is 24 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+DEPOSITOR : Account balance after deposit is 6000
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 1 at 0x1FFEFFFBE8 by thread #2
+==56465== Locks held: none
+==56465==    at 0x109AB3: AccountUser::run() (account.cpp:78)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465==    by 0x572388E: clone (clone.S:95)
+==56465== 
+==56465== This conflicts with a previous write of size 1 by thread #1
+==56465== Locks held: none
+==56465==    at 0x10985F: Thread::start(std::thread*) (std-threads.hpp:40)
+==56465==    by 0x109B90: AccountUser::start() (account.cpp:89)
+==56465==    by 0x1093F5: main (account.cpp:99)
+==56465==  Address 0x1ffefffbe8 is on thread #1's stack
+==56465==  in frame #2, created by main (account.cpp:94)
+==56465== 
+DEPOSITOR : Account balance before the deposit is 6000
+DEPOSITOR : Account balance after deposit is 7000
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 8 at 0x30D038 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5174BBE: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109922: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465== 
+==56465== This conflicts with a previous write of size 8 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099CD: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x30d038 is 24 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 8 at 0x30D038 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109922: AccountUser::operateAccount() (account.cpp:54)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465== 
+==56465== This conflicts with a previous write of size 8 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x1099CD: AccountUser::operateAccount() (account.cpp:61)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x30d038 is 24 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+DEPOSITOR : Account balance before the deposit is 7000
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465==  Lock at 0x1FFEFFFC28 was first observed
+==56465==    at 0x4C3403C: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x1091A9: __gthread_mutex_lock(pthread_mutex_t*) (gthr-default.h:748)
+==56465==    by 0x109615: std::mutex::lock() (std_mutex.h:103)
+==56465==    by 0x109325: Account::deposit(double) (account.cpp:35)
+==56465==    by 0x109972: AccountUser::operateAccount() (account.cpp:55)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==  Address 0x1ffefffc28 is on thread #1's stack
+==56465==  in frame #2, created by main (account.cpp:94)
+==56465== 
+==56465== Possible data race during write of size 8 at 0x1FFEFFFC20 by thread #3
+==56465== Locks held: 1, at address 0x1FFEFFFC28
+==56465==    at 0x10928B: Account::withdraw(double) (account.cpp:22)
+==56465==    by 0x109A1D: AccountUser::operateAccount() (account.cpp:62)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465==    by 0x572388E: clone (clone.S:95)
+==56465== 
+==56465== This conflicts with a previous read of size 8 by thread #2
+==56465== Locks held: none
+==56465==    at 0x109220: Account::getBalance() (account.cpp:14)
+==56465==    by 0x109998: AccountUser::operateAccount() (account.cpp:56)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==  Address 0x1ffefffc20 is on thread #1's stack
+==56465==  in frame #2, created by main (account.cpp:94)
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during read of size 8 at 0x30D038 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5174BBE: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109A30: AccountUser::operateAccount() (account.cpp:63)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465== 
+==56465== This conflicts with a previous write of size 8 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109985: AccountUser::operateAccount() (account.cpp:56)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x30d038 is 24 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 8 at 0x30D038 by thread #3
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109A30: AccountUser::operateAccount() (account.cpp:63)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==    by 0x4E496DA: start_thread (pthread_create.c:463)
+==56465== 
+==56465== This conflicts with a previous write of size 8 by thread #2
+==56465== Locks held: none
+==56465==    at 0x5174C6A: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x5175026: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x109985: AccountUser::operateAccount() (account.cpp:56)
+==56465==    by 0x109AC6: AccountUser::run() (account.cpp:80)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==  Address 0x30d038 is 24 bytes inside data symbol "_ZSt4cout@@GLIBCXX_3.4"
+==56465== 
+WITHDRAWER: Account balance after withdrawing is 5000
+WITHDRAWER : Account balance before withdrawing is 5000
+WITHDRAWER: Account balance after withdrawing is 3000
+WITHDRAWER : Account balance before withdrawing is 3000
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 1 at 0x1FFEFFFBE8 by thread #1
+==56465== Locks held: none
+==56465==    at 0x109872: Thread::stop() (std-threads.hpp:45)
+==56465==    by 0x10942B: main (account.cpp:103)
+==56465== 
+==56465== This conflicts with a previous read of size 1 by thread #2
+==56465== Locks held: none
+==56465==    at 0x109AB3: AccountUser::run() (account.cpp:78)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==  Address 0x1ffefffbe8 is on thread #1's stack
+==56465==  in frame #1, created by main (account.cpp:94)
+==56465== 
+==56465== ----------------------------------------------------------------
+==56465== 
+==56465== Possible data race during write of size 1 at 0x1FFEFFFC08 by thread #1
+==56465== Locks held: none
+==56465==    at 0x109872: Thread::stop() (std-threads.hpp:45)
+==56465==    by 0x109437: main (account.cpp:104)
+==56465== 
+==56465== This conflicts with a previous read of size 1 by thread #3
+==56465== Locks held: none
+==56465==    at 0x109AB3: AccountUser::run() (account.cpp:78)
+==56465==    by 0x10A387: void std::__invoke_impl<void, void (AccountUser::*)(), AccountUser*>(std::__invoke_memfun_deref, void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:73)
+==56465==    by 0x109FEC: std::__invoke_result<void (AccountUser::*)(), AccountUser*>::type std::__invoke<void (AccountUser::*)(), AccountUser*>(void (AccountUser::*&&)(), AccountUser*&&) (invoke.h:95)
+==56465==    by 0x10A876: decltype (__invoke((_S_declval<0ul>)(), (_S_declval<1ul>)())) std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (thread:234)
+==56465==    by 0x10A817: std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> >::operator()() (thread:243)
+==56465==    by 0x10A7E7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (AccountUser::*)(), AccountUser*> > >::_M_run() (thread:186)
+==56465==    by 0x511E66E: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25)
+==56465==    by 0x4C36C26: ??? (in /usr/lib/valgrind/vgpreload_helgrind-amd64-linux.so)
+==56465==  Address 0x1ffefffc08 is on thread #1's stack
+==56465==  in frame #1, created by main (account.cpp:94)
+==56465== 
+WITHDRAWER: Account balance after withdrawing is 1000
+
+Thread 119088896 stopped as requested.
+DEPOSITOR : Account balance after deposit is 2000
+
+Thread 110696192 stopped as requested.
+Thread destructor 
+Thread destructor 
+==56465== 
+==56465== For counts of detected and suppressed errors, rerun with: -v
+==56465== Use --history-level=approx or =none to gain increased speed, at
+==56465== the cost of reduced accuracy of conflicting-access information
+==56465== ERROR SUMMARY: 457 errors from 21 contexts (suppressed: 340 from 84)
