@@ -6,12 +6,12 @@ using std::endl;
 Resource::Resource(std::string name)
     : m_name(name)
 {
-    cout << "constructing : " << m_name << endl;
+    cout << "Resource : Constructor : " << m_name << endl;
 }
 
 Resource::~Resource()
 {
-    cout << "destructing : " << m_name << endl;
+    cout << "Resource : Destructor : " << m_name << endl;
 }
 
 std::string Resource::getName()

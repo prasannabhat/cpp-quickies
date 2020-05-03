@@ -1,5 +1,6 @@
 #include "Person.hpp"
 #include "Resource.hpp"
+#include "SmartPerson.hpp"
 #include <string>
 
 
@@ -117,6 +118,49 @@ void assignObject()
 
 /**************************************************************************************************************/
 
+/************************ SmartPerson related code ************************************************************/
+namespace smartperson
+{
+void goodCase()
+{
+    SmartPerson p1("Prasanna", "Bhat", 38);
+    p1.addResource();
+    string s1 = p1.getResourceName();
+    p1.addResource();
+
+    SmartPerson p2 = p1;
+    p2.getResourceName();
+}
+} // namespace smartperson
+
+/**************************************************************************************************************/
+
+/****************** Smart Pointers ****************************************************************************/
+namespace smart_pointers
+{
+void sharedPointers()
+{
+    std::shared_ptr<Resource> p1;
+    p1 = std::make_shared<Resource>(std::string("Resource for ") + "Prasanna");
+    p1->getName();
+    std::shared_ptr<Resource> p2;
+    p2 = p1;
+    p2->getName();
+}
+
+void uniquePointers()
+{
+    auto p1 = std::make_unique<Resource>(std::string("Resource for ") + "Prasanna");
+    std::cout << "Name before moving " << p1->getName() << endl;
+    auto p2 = std::move(p1);
+    std::cout << "Name after moving " << p2->getName() << endl;
+    // auto p2 = p1.release();
+    // p2->getName();
+    // delete p2;
+}
+} // namespace smart_pointers
+/**************************************************************************************************************/
+
 int main(int argc, char const* argv[])
 {
     // resource::goodCase();
@@ -126,7 +170,11 @@ int main(int argc, char const* argv[])
     // resource::duplicateDelete();
     // person::goodCase();
     // person::copyObject();
-    person::assignObject();
+    // person::assignObject();
+
+    // smartperson::goodCase();
+    smart_pointers::sharedPointers();
+    smart_pointers::uniquePointers();
 
     return 0;
 }

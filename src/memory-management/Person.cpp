@@ -11,12 +11,12 @@ Person::Person(std::string first, std::string last, int arbitrary)
     , pResource(nullptr)
 
 {
-    cout << "Constructor : Person : " << this->getName() << endl;
+    cout << "Person : Constructor " << this->getName() << endl;
 }
 
 Person::Person(Person const& p)
 {
-    cout << "Copy Constructor : Person : " << p.getName() << endl;
+    cout << "Person : Cp Constructor " << this->getName() << endl;
     pResource = new Resource(p.pResource->getName());
 }
 
@@ -37,6 +37,7 @@ std::string Person::getName() const
 
 Person::~Person()
 {
+    cout << "Person : Destructor " << this->getName() << endl;
     delete pResource;
 }
 
