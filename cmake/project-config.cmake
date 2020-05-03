@@ -1,0 +1,8 @@
+set(CXX_WARNING_FLAGS "-Wall")
+set(CMAKE_BUILD_TYPE "Debug")
+# set(CMAKE_CXX_COMPILER "g++")
+# set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+# set(CMAKE_CXX17_FLAGS   "-std=c++17")
+set(CMAKE_CXX_FLAGS  ${CMAKE_CXX_FLAGS} ${CMAKE_CXX17_FLAGS} ${GCC_WARNING_FLAGS})
+message("CMAKE_CXX_FLAGS is ${CMAKE_CXX_FLAGS}")
+message("CXX compiler : ${CMAKE_CXX_COMPILER}")

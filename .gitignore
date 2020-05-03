@@ -3,5 +3,6 @@ build/
 
 # CMake
 cmake-build-*/
+*.map
 
 *.out
