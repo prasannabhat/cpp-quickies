@@ -7,7 +7,8 @@ include(cmake/project-config.cmake)
 add_subdirectory(ext/googletest)
 
 add_subdirectory(src/gtest-example/gtest)
-add_subdirectory(src/gtest-example/gmock)
+add_subdirectory(src/gtest-example/gmock/swami)
+add_subdirectory(src/gtest-example/gmock/turtles)
 
 add_subdirectory(src/threads)
 add_subdirectory(src/memory-management)
